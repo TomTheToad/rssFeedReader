@@ -117,18 +117,38 @@ $(function () {
     });
 
     /* TODO: Write a new test suite named "New Feed Selection" */
-    describe('New Feed Selection', function () {
-        // Fields
-        feedsPriorToLoad = allFeeds;
-
-        beforeEach(function () {
-            loadFeed(0);
-        });
-
-    });
 
     /* TODO: Write a test that ensures when a new feed is loaded
      * by the loadFeed function that the content actually changes.
      * Remember, loadFeed() is asynchronous.
      */
+
+    describe('New Feed Selection', function () {
+        // Fields
+        var feed1;
+        var feed2;
+
+        beforeEach(function (done) {
+            // Set feed1 to result of index 0
+            // Use loadFeed callBack
+            loadFeed(0, () => {
+                feed1 = ($(".feed").html());
+                // test the test
+                // feed2 = ($(".feed").html());
+                done();
+            });
+            // Set feed2 to result of index 1
+            loadFeed(1, () => {
+                feed2 = ($(".feed").html());
+                done();
+            });
+        });
+
+        it('feed div content changes with load new feed', function (done) {
+            // get Feed now
+            expect(feed1).not.toEqual(feed2);
+            done();
+        });
+    });
+
 }());
