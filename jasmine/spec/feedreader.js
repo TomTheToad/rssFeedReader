@@ -145,9 +145,14 @@ $(function () {
         });
 
         it('feed div content changes with load new feed', function (done) {
-            // Check that feed when 0 index is loaded not equal to feed when 1 index loaded.
-            expect(feed0).not.toEqual(feed1);
-            done();
+            // Check feed variables are defined.
+            if (typeof feed0 !== 'undefined' || typeof feed0 !== 'undefined') {
+                // Check that feed when 0 index is loaded not equal to feed when 1 index loaded.
+                expect(feed0).not.toEqual(feed1);
+                done();
+            } else {
+                throw new Error('Test variables are undefined');
+            }
         });
     });
 
