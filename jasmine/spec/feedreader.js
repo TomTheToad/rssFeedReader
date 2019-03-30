@@ -32,6 +32,7 @@ $(function () {
          * and that the URL is not empty.
          */
         it('all have URL and is not empty', function () {
+            // better for or forEach loop?
             allFeeds.forEach((feed) => {
                 expect(feed.url).toBeDefined();
                 expect(feed.url).not.toBeNull();
@@ -112,6 +113,7 @@ $(function () {
 
         it('contains at least a single entry', function (done) {
             expect(allFeeds.length).toBeGreaterThan(0);
+            // Is this necessary?
             done();
         });
     });
@@ -125,28 +127,26 @@ $(function () {
 
     describe('New Feed Selection', function () {
         // Fields
+        var feed0;
         var feed1;
-        var feed2;
 
         beforeEach(function (done) {
             // Set feed1 to result of index 0
-            // Use loadFeed callBack
+            // Use loadFeed callBack .. ty Udacity
             loadFeed(0, () => {
-                feed1 = ($(".feed").html());
-                // test the test
-                // feed2 = ($(".feed").html());
+                feed0 = ($('.feed').html());
                 done();
             });
             // Set feed2 to result of index 1
             loadFeed(1, () => {
-                feed2 = ($(".feed").html());
+                feed1 = ($('.feed').html());
                 done();
             });
         });
 
         it('feed div content changes with load new feed', function (done) {
-            // get Feed now
-            expect(feed1).not.toEqual(feed2);
+            // Check that feed when 0 index is loaded not equal to feed when 1 index loaded.
+            expect(feed0).not.toEqual(feed1);
             done();
         });
     });
