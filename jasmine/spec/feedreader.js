@@ -33,9 +33,9 @@ $(function () {
          */
         it('all have URL and is not empty', function () {
             // better for or forEach loop?
-            allFeeds.forEach((feed) => {
+            allFeeds.forEach(feed => {
                 expect(feed.url).toBeDefined();
-                expect(feed.url).not.toBeNull();
+                expect(feed.url.length).not.toBe(0);
             });
         });
 
@@ -47,7 +47,7 @@ $(function () {
         it('all have name and is not empty', function () {
             allFeeds.forEach(feed => {
                 expect(feed.name).toBeDefined();
-                expect(feed.name).not.toBeNull();
+                expect(feed.name.length).not.toBe(0);
             });
         });
     });
@@ -107,13 +107,13 @@ $(function () {
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
         beforeEach(function (done) {
-            loadFeed(0);
-            done();
+            loadFeed(0, function () {
+                done();
+            });
         })
 
         it('contains at least a single entry', function (done) {
             expect(allFeeds.length).toBeGreaterThan(0);
-            // Is this necessary?
             done();
         });
     });
@@ -135,18 +135,19 @@ $(function () {
             // Use loadFeed callBack .. ty Udacity
             loadFeed(0, () => {
                 feed0 = ($('.feed').html());
-                done();
-            });
-            // Set feed2 to result of index 1
-            loadFeed(1, () => {
-                feed1 = ($('.feed').html());
-                done();
+                // Set feed1 to result of index 1
+                // TODO: Is this running within the app or test scope?
+                loadFeed(1, () => {
+                    feed1 = ($('.feed').html());
+                    done();
+                });
             });
         });
 
         it('feed div content changes with load new feed', function (done) {
-            // Check feed variables are defined.
-            if (typeof feed0 !== 'undefined' || typeof feed0 !== 'undefined') {
+            // Check feed variables are defined before execution.
+            // Send error if a feed is undefined.
+            if (typeof feed0 !== 'undefined' && typeof feed1 !== 'undefined') {
                 // Check that feed when 0 index is loaded not equal to feed when 1 index loaded.
                 expect(feed0).not.toEqual(feed1);
                 done();
